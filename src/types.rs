@@ -7,6 +7,9 @@
 
 use bytes::{Buf, BufMut};
 
+#[cfg(not(feature = "std"))]
+use alloc::{String, Vec};
+
 use DecodeError;
 use Message;
 use encoding::*;

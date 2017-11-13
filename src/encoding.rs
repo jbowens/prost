@@ -7,6 +7,11 @@ use core::str;
 use core::u32;
 use core::usize;
 
+#[cfg(not(feature = "std"))]
+use alloc::{String, Vec};
+#[cfg(not(feature = "std"))]
+use alloc::fmt::*;
+
 use bytes::{
     Buf,
     BufMut,
@@ -691,7 +696,6 @@ pub mod message {
 /// generic over `HashMap` and `BTreeMap`.
 macro_rules! map {
     ($map_ty:ident) => (
-        use core::collections::$map_ty;
         use core::hash::Hash;
 
         use ::encoding::*;
@@ -833,11 +837,17 @@ macro_rules! map {
     )
 }
 
+#[cfg(feature = "std")]
 pub mod hash_map {
+    use std::collections::HashMap;
     map!(HashMap);
 }
 
 pub mod btree_map {
+    #[cfg(not(feature = "std"))]
+    use alloc::btree_map::BTreeMap;
+    #[cfg(feature = "std")]
+    use std::collections::BTreeMap;
     map!(BTreeMap);
 }
 

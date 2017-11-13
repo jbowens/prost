@@ -1,6 +1,13 @@
 #![doc(html_root_url = "https://docs.rs/prost/0.2.3")]
 
-#![no_std]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(feature = "std")]
+extern crate core;
+
+#[cfg(not(feature = "std"))]
+#[macro_use]
+extern crate alloc;
 
 extern crate bytes;
 

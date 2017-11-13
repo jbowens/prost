@@ -40,3 +40,7 @@ env_logger = "0.4"
 log = "0.3"
 prost-derive = { version = "0.2", path = "prost-derive" }
 quickcheck = "0.4"
+
+[features]
+default = ["std"]
+std = []

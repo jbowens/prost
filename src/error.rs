@@ -1,13 +1,18 @@
 //! Protobuf encoding and decoding errors.
 
-use core::borrow::Cow;
-use core::error;
 use core::fmt;
-use core::io;
+
+#[cfg(feature = "std")]
+use std::borrow::Cow;
+
+#[cfg(not(feature = "std"))]
+use alloc::Vec;
+#[cfg(not(feature = "std"))]
+use alloc::borrow::Cow;
 
 /// A Protobuf message decoding error.
 ///
-/// `DecodeError` indicates that the input buffer does not caontain a valid
+/// `DecodeError` indicates that the input buffer does not contain a valid
 /// Protobuf message. The error details should be considered 'best effort': in
 /// general it is not possible to exactly pinpoint why data is malformed.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -52,15 +57,17 @@ impl fmt::Display for DecodeError {
     }
 }
 
-impl error::Error for DecodeError {
+#[cfg(feature = "std")]
+impl ::std::error::Error for DecodeError {
     fn description(&self) -> &str {
         &self.description
     }
 }
 
-impl From<DecodeError> for io::Error {
-    fn from(error: DecodeError) -> io::Error {
-        io::Error::new(io::ErrorKind::InvalidData, error)
+#[cfg(feature = "std")]
+impl From<DecodeError> for ::std::io::Error {
+    fn from(error: DecodeError) -> ::std::io::Error {
+        ::std::io::Error::new(::std::io::ErrorKind::InvalidData, error)
     }
 }
 
@@ -96,21 +103,24 @@ impl EncodeError {
     }
 }
 
+#[cfg(feature = "std")]
 impl fmt::Display for EncodeError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str(error::Error::description(self))?;
+        f.write_str(::std::error::Error::description(self))?;
         write!(f, " (required: {}, remaining: {})", self.required, self.remaining)
     }
 }
 
-impl error::Error for EncodeError {
+#[cfg(feature = "std")]
+impl ::std::error::Error for EncodeError {
     fn description(&self) -> &str {
         "failed to encode Protobuf message: insufficient buffer capacity"
     }
 }
 
-impl From<EncodeError> for io::Error {
-    fn from(error: EncodeError) -> io::Error {
-        io::Error::new(io::ErrorKind::InvalidInput, error)
+#[cfg(feature = "std")]
+impl From<EncodeError> for ::std::io::Error {
+    fn from(error: EncodeError) -> ::std::io::Error {
+        ::std::io::Error::new(::std::io::ErrorKind::InvalidInput, error)
     }
 }

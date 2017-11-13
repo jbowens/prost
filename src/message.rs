@@ -3,6 +3,9 @@ use core::usize;
 
 use bytes::{Buf, BufMut, IntoBuf};
 
+#[cfg(not(feature = "std"))]
+use alloc::boxed::Box;
+
 use DecodeError;
 use EncodeError;
 use encoding::*;
