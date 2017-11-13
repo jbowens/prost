@@ -1,9 +1,9 @@
 //! Protobuf encoding and decoding errors.
 
-use std::borrow::Cow;
-use std::error;
-use std::fmt;
-use std::io;
+use core::borrow::Cow;
+use core::error;
+use core::fmt;
+use core::io;
 
 /// A Protobuf message decoding error.
 ///

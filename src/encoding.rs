@@ -2,10 +2,10 @@
 //!
 //! Meant to be used only from `Message` implementations.
 
-use std::cmp::min;
-use std::str;
-use std::u32;
-use std::usize;
+use core::cmp::min;
+use core::str;
+use core::u32;
+use core::usize;
 
 use bytes::{
     Buf,
@@ -691,8 +691,8 @@ pub mod message {
 /// generic over `HashMap` and `BTreeMap`.
 macro_rules! map {
     ($map_ty:ident) => (
-        use std::collections::$map_ty;
-        use std::hash::Hash;
+        use core::collections::$map_ty;
+        use core::hash::Hash;
 
         use ::encoding::*;
 
@@ -843,10 +843,10 @@ pub mod btree_map {
 
 #[cfg(test)]
 mod test {
-    use std::borrow::Borrow;
-    use std::fmt::Debug;
-    use std::io::Cursor;
-    use std::u64;
+    use core::borrow::Borrow;
+    use core::fmt::Debug;
+    use core::io::Cursor;
+    use core::u64;
 
     use bytes::{Bytes, BytesMut, IntoBuf};
     use quickcheck::TestResult;
@@ -1069,7 +1069,7 @@ mod test {
                   $vals:tt) => {
             $(
                 mod $key_proto {
-                    use std::collections::$map_type;
+                    use core::collections::$map_type;
                     use quickcheck::TestResult;
 
                     use ::encoding::*;

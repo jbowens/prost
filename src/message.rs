@@ -1,5 +1,5 @@
-use std::fmt::Debug;
-use std::usize;
+use core::fmt::Debug;
+use core::usize;
 
 use bytes::{Buf, BufMut, IntoBuf};
 

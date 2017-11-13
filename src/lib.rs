@@ -1,5 +1,7 @@
 #![doc(html_root_url = "https://docs.rs/prost/0.2.3")]
 
+#![no_std]
+
 extern crate bytes;
 
 #[cfg(test)]
